@@ -6,18 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RestaurantDto implements Serializable {
+public class OpeningHoursDto implements Serializable {
 
-    private static final long serialVersionUID = -300553145013893898L;
+    private static final long serialVersionUID = -3636213004165581835L;
 
-    private String name;
-
-    private String addressLine;
-
-
+    private Map<String, List<String>> openingHours;
 }

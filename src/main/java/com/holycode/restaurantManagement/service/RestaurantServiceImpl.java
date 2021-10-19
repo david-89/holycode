@@ -3,6 +3,7 @@ package com.holycode.restaurantManagement.service;
 import com.holycode.restaurantManagement.client.GoogleApiClient;
 import com.holycode.restaurantManagement.dto.converter.RestaurantDtoConverter;
 import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
+import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     public RestaurantDto getRestaurant(String restaurantId) {
         GoogleApiRestaurantDto googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
         return restaurantDtoConverter.convertToOutboundDto(googleApiRestaurant);
+    }
+
+    @Override
+    public OpeningHoursDto getOpeningHours(String restaurantId) {
+        GoogleApiRestaurantDto googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
+        return restaurantDtoConverter.convertToOpeningHoursDto(googleApiRestaurant);
     }
 }

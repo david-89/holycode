@@ -3,6 +3,7 @@ package com.holycode.restaurantManagement.dto.converter;
 import com.holycode.restaurantManagement.dto.response.common.Days;
 import com.holycode.restaurantManagement.dto.response.common.OpeningHoursData;
 import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
+import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +22,20 @@ public class RestaurantDtoConverter {
         if (restaurantDto == null) {
             return new RestaurantDto();
         }
-        Map<String, List<String>> hoursGroupedByDay = groupOpeningHoursByDay(restaurantDto.getOpeningHours().getDays());
 
         return RestaurantDto.builder()
             .name(restaurantDto.getDisplayedWhat())
             .addressLine(restaurantDto.getDisplayedWhere())
+            .build();
+    }
+
+    public OpeningHoursDto convertToOpeningHoursDto(GoogleApiRestaurantDto restaurantDto) {
+        if (restaurantDto == null) {
+            return new OpeningHoursDto();
+        }
+        Map<String, List<String>> hoursGroupedByDay = groupOpeningHoursByDay(restaurantDto.getOpeningHours().getDays());
+
+        return OpeningHoursDto.builder()
             .openingHours(formatOpeningHours(hoursGroupedByDay))
             .build();
     }
