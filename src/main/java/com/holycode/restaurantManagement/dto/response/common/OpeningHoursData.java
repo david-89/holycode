@@ -17,7 +17,7 @@ public class OpeningHoursData implements Serializable {
 
     private OpeningType type = OpeningType.OPEN;
 
-    private enum OpeningType {
+    public enum OpeningType {
         OPEN, CLOSED
     }
 }
