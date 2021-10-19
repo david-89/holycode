@@ -1,4 +1,4 @@
-package com.holycode.restaurantManagement.dto;
+package com.holycode.restaurantManagement.dto.converter;
 
 import com.holycode.restaurantManagement.dto.response.common.Days;
 import com.holycode.restaurantManagement.dto.response.common.OpeningHoursData;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -47,6 +48,9 @@ public class RestaurantDtoConverter {
     }
 
     private Map<String, List<String>> groupOpeningHoursByDay(Days days) {
+        if (days == null) {
+            return Collections.emptyMap();
+        }
         Map<String, List<String>> daysHoursMap = new LinkedHashMap<>();
         initMapWithDays(daysHoursMap);
 
@@ -101,12 +105,14 @@ public class RestaurantDtoConverter {
 
         List<String> startAndEndDay = new ArrayList<>(days);
 
+        String startDay = startAndEndDay.get(0);
+        startDay = startDay.substring(0, 1).toUpperCase() + startDay.substring(1);
         if (startAndEndDay.size() == 1) {
-            return startAndEndDay.get(0);
+            return startDay;
         }
 
-        String startDay = startAndEndDay.get(0);
         String endDay = startAndEndDay.get(startAndEndDay.size() - 1);
+        endDay = endDay.substring(0, 1).toUpperCase() + endDay.substring(1);
 
         return startDay + " - " + endDay;
     }

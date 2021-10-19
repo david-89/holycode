@@ -1,8 +1,7 @@
 package com.holycode.restaurantManagement.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.holycode.restaurantManagement.client.GoogleApiClient;
-import com.holycode.restaurantManagement.dto.RestaurantDtoConverter;
+import com.holycode.restaurantManagement.dto.converter.RestaurantDtoConverter;
 import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantDto getRestaurant(String restaurantId) throws JsonProcessingException {
+    public RestaurantDto getRestaurant(String restaurantId) {
         GoogleApiRestaurantDto googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
         return restaurantDtoConverter.convertToOutboundDto(googleApiRestaurant);
     }
