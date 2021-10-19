@@ -1,0 +1,23 @@
+package com.holycode.restaurantManagement.dto.response.common;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class OpeningHoursData implements Serializable {
+
+    private static final long serialVersionUID = 8080661759183849615L;
+
+    private String start = "";
+
+    private String end = "";
+
+    private OpeningType type = OpeningType.OPEN;
+
+    private enum OpeningType {
+        OPEN, CLOSED
+    }
+}
