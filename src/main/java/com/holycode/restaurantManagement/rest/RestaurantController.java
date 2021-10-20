@@ -2,6 +2,7 @@ package com.holycode.restaurantManagement.rest;
 
 import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
+import com.holycode.restaurantManagement.exception.GoogleApiCallException;
 import com.holycode.restaurantManagement.service.RestaurantService;
 import com.holycode.restaurantManagement.util.UrlConstants;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class RestaurantController {
     }
 
     @GetMapping(GET_RESTAURANT_BY_ID_URL)
-    public RestaurantDto getRestaurant(@PathVariable("restaurantId") String restaurantId) {
+    public RestaurantDto getRestaurant(@PathVariable("restaurantId") String restaurantId) throws GoogleApiCallException {
         return restaurantService.getRestaurant(restaurantId);
     }
 

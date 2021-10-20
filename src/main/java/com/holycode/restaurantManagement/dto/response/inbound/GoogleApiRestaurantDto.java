@@ -21,4 +21,6 @@ public class GoogleApiRestaurantDto implements Serializable {
 
     private OpeningHours openingHours;
 
+    private PlaceFeedbackSummary placeFeedbackSummary;
+
 }

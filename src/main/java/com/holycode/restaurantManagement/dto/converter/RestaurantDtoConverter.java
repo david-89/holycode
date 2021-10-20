@@ -5,6 +5,7 @@ import com.holycode.restaurantManagement.dto.response.common.OpeningHoursData;
 import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
 import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -15,8 +16,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import static com.holycode.restaurantManagement.util.RatingUtil.roundOffRating;
+
 @Component
 public class RestaurantDtoConverter {
+
+    @Value("${restaurant.management.rating.roundOff.places}")
+    private Integer roundOffPlaces;
 
     public RestaurantDto convertToOutboundDto(GoogleApiRestaurantDto restaurantDto) {
         if (restaurantDto == null) {
@@ -26,6 +32,7 @@ public class RestaurantDtoConverter {
         return RestaurantDto.builder()
             .name(restaurantDto.getDisplayedWhat())
             .addressLine(restaurantDto.getDisplayedWhere())
+            .averageRating(roundOffRating(restaurantDto.getPlaceFeedbackSummary().getAverageRating(), roundOffPlaces))
             .build();
     }
 

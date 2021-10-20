@@ -5,9 +5,11 @@ import com.holycode.restaurantManagement.dto.converter.RestaurantDtoConverter;
 import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
 import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final GoogleApiClient googleApiClient;
@@ -21,7 +23,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDto getRestaurant(String restaurantId) {
-        GoogleApiRestaurantDto googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
+        GoogleApiRestaurantDto googleApiRestaurant;
+        googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
+
         return restaurantDtoConverter.convertToOutboundDto(googleApiRestaurant);
     }
 
