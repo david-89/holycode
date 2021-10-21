@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GoogleApiRestaurantDto implements Serializable {
+public class InboundRestaurantDto implements Serializable {
 
     private static final long serialVersionUID = -5289596808877237893L;
 

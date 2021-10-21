@@ -2,7 +2,7 @@ package com.holycode.restaurantManagement.dto.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.holycode.restaurantManagement.dto.response.common.OpeningHoursData;
-import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
+import com.holycode.restaurantManagement.dto.response.inbound.InboundRestaurantDto;
 import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.mockUtils.JsonToJavaConverter;
 import org.junit.jupiter.api.BeforeAll;
@@ -45,9 +45,9 @@ public class RestaurantDtoConverterTest {
 
     @Test
     public void convertToOpeningHoursDtoFormatsOpeningHoursProperly() throws Exception {
-        JsonToJavaConverter<GoogleApiRestaurantDto> jsonConverter = new JsonToJavaConverter<>(objectMapper, fullOpeningHoursFilePath);
-        GoogleApiRestaurantDto mockGoogleApiRestaurantDto = jsonConverter.loadJson(GoogleApiRestaurantDto.class);
-        OpeningHoursDto result = converter.convertToOpeningHoursDto(mockGoogleApiRestaurantDto);
+        JsonToJavaConverter<InboundRestaurantDto> jsonConverter = new JsonToJavaConverter<>(objectMapper, fullOpeningHoursFilePath);
+        InboundRestaurantDto mockInboundRestaurantDto = jsonConverter.loadJson(InboundRestaurantDto.class);
+        OpeningHoursDto result = converter.convertToOpeningHoursDto(mockInboundRestaurantDto);
 
         assertEquals(4, result.getOpeningHours().size());
         assertEquals(OpeningHoursData.OpeningType.CLOSED.name().toLowerCase(), result.getOpeningHours().get("Monday").get(0));
@@ -58,9 +58,9 @@ public class RestaurantDtoConverterTest {
 
     @Test
     public void convertToOpeningHoursDtoReturnsEmptyMapWhenEmptyOpeningHours() throws Exception {
-        JsonToJavaConverter<GoogleApiRestaurantDto> jsonConverter = new JsonToJavaConverter<>(objectMapper, emptyOpeningHoursFilePath);
-        GoogleApiRestaurantDto mockGoogleApiRestaurantDto = jsonConverter.loadJson(GoogleApiRestaurantDto.class);
-        OpeningHoursDto result = converter.convertToOpeningHoursDto(mockGoogleApiRestaurantDto);
+        JsonToJavaConverter<InboundRestaurantDto> jsonConverter = new JsonToJavaConverter<>(objectMapper, emptyOpeningHoursFilePath);
+        InboundRestaurantDto mockInboundRestaurantDto = jsonConverter.loadJson(InboundRestaurantDto.class);
+        OpeningHoursDto result = converter.convertToOpeningHoursDto(mockInboundRestaurantDto);
 
         assertEquals(0, result.getOpeningHours().size());
     }

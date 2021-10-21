@@ -2,7 +2,7 @@ package com.holycode.restaurantManagement.dto.converter;
 
 import com.holycode.restaurantManagement.dto.response.common.Days;
 import com.holycode.restaurantManagement.dto.response.common.OpeningHoursData;
-import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
+import com.holycode.restaurantManagement.dto.response.inbound.InboundRestaurantDto;
 import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +24,7 @@ public class RestaurantDtoConverter {
     @Value("${restaurant.management.rating.roundOff.places}")
     private Integer roundOffPlaces;
 
-    public RestaurantDto convertToOutboundDto(GoogleApiRestaurantDto restaurantDto) {
+    public RestaurantDto convertToOutboundDto(InboundRestaurantDto restaurantDto) {
         if (restaurantDto == null) {
             return new RestaurantDto();
         }
@@ -36,7 +36,7 @@ public class RestaurantDtoConverter {
             .build();
     }
 
-    public OpeningHoursDto convertToOpeningHoursDto(GoogleApiRestaurantDto restaurantDto) {
+    public OpeningHoursDto convertToOpeningHoursDto(InboundRestaurantDto restaurantDto) {
         if (restaurantDto == null) {
             return new OpeningHoursDto();
         }

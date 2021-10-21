@@ -1,6 +1,6 @@
 package com.holycode.restaurantManagement.client;
 
-import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
+import com.holycode.restaurantManagement.dto.response.inbound.InboundRestaurantDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +12,6 @@ import static com.holycode.restaurantManagement.util.UrlConstants.GOOGLE_API_ROO
 public interface GoogleApiClient {
 
     @GetMapping(GOOGLE_API_ROOT_URL + GET_RESTAURANT_BY_ID_URL)
-    GoogleApiRestaurantDto getRestaurant(@PathVariable("restaurantId") String restaurantId);
+    InboundRestaurantDto getRestaurant(@PathVariable("restaurantId") String restaurantId);
 
 }

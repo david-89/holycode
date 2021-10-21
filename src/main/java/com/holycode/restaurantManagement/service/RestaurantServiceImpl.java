@@ -2,7 +2,7 @@ package com.holycode.restaurantManagement.service;
 
 import com.holycode.restaurantManagement.client.GoogleApiClient;
 import com.holycode.restaurantManagement.dto.converter.RestaurantDtoConverter;
-import com.holycode.restaurantManagement.dto.response.inbound.GoogleApiRestaurantDto;
+import com.holycode.restaurantManagement.dto.response.inbound.InboundRestaurantDto;
 import com.holycode.restaurantManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.restaurantManagement.dto.response.outbound.RestaurantDto;
 import lombok.extern.slf4j.Slf4j;
@@ -23,15 +23,15 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDto getRestaurant(String restaurantId) {
-        GoogleApiRestaurantDto googleApiRestaurant;
-        googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
+        InboundRestaurantDto inboundRestaurantDto;
+        inboundRestaurantDto = googleApiClient.getRestaurant(restaurantId);
 
-        return restaurantDtoConverter.convertToOutboundDto(googleApiRestaurant);
+        return restaurantDtoConverter.convertToOutboundDto(inboundRestaurantDto);
     }
 
     @Override
     public OpeningHoursDto getOpeningHours(String restaurantId) {
-        GoogleApiRestaurantDto googleApiRestaurant = googleApiClient.getRestaurant(restaurantId);
-        return restaurantDtoConverter.convertToOpeningHoursDto(googleApiRestaurant);
+        InboundRestaurantDto inboundRestaurantDto = googleApiClient.getRestaurant(restaurantId);
+        return restaurantDtoConverter.convertToOpeningHoursDto(inboundRestaurantDto);
     }
 }
