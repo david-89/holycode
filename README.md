@@ -1,6 +1,6 @@
-# Restaurant management
+# Place management
 
-This application consumes an external api from where it fetches restaurant data.
+This application consumes an external api from where it fetches place data.
 
 It repacks the data and serves it to a front-end application.
 
