@@ -2,7 +2,6 @@ package com.holycode.placeManagement.rest;
 
 import com.holycode.placeManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.placeManagement.dto.response.outbound.PlaceDto;
-import com.holycode.placeManagement.exception.GoogleApiCallException;
 import com.holycode.placeManagement.service.PlaceService;
 import com.holycode.placeManagement.util.UrlConstants;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,7 @@ public class PlaceController {
     }
 
     @GetMapping(GET_PLACE_BY_ID_URL)
-    public PlaceDto getPlace(@PathVariable("placeId") String placeId) throws GoogleApiCallException {
+    public PlaceDto getPlace(@PathVariable("placeId") String placeId) {
         return placeService.getPlace(placeId);
     }
 

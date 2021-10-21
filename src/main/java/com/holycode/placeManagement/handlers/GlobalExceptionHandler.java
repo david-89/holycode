@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(responseHeaders).body(errorDetails);
         } else if (ex.status() >= 400 && ex.status() < 500) {
             errorDetails.setDetail(CLIENT_ERROR_MSG);
+            errorDetails.setDetail(ex.getMessage());
             return ResponseEntity.badRequest().headers(responseHeaders).build();
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(responseHeaders).build();

@@ -5,11 +5,9 @@ import com.holycode.placeManagement.dto.converter.PlaceDtoConverter;
 import com.holycode.placeManagement.dto.response.inbound.InboundPlaceDto;
 import com.holycode.placeManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.placeManagement.dto.response.outbound.PlaceDto;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
 public class PlaceServiceImpl implements PlaceService {
 
     private final GoogleApiClient googleApiClient;
