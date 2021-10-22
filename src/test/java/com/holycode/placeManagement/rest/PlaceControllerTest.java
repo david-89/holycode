@@ -48,7 +48,7 @@ public class PlaceControllerTest {
         openingHours.put("Monday - Friday", Arrays.asList("11:30 - 14:00", "18:30 - 22:00"));
         openingHours.put("Saturday - Sunday", Collections.singletonList("closed"));
 
-        return new OpeningHoursDto(openingHours);
+        return new OpeningHoursDto(openingHours, false);
     }
 
     @Test

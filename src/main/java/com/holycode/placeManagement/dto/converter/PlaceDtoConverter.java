@@ -1,21 +1,24 @@
 package com.holycode.placeManagement.dto.converter;
 
 import com.holycode.placeManagement.dto.response.inbound.Days;
-import com.holycode.placeManagement.dto.response.inbound.OpeningHoursData;
 import com.holycode.placeManagement.dto.response.inbound.InboundPlaceDto;
+import com.holycode.placeManagement.dto.response.inbound.OpeningHoursData;
 import com.holycode.placeManagement.dto.response.outbound.OpeningHoursDto;
 import com.holycode.placeManagement.dto.response.outbound.PlaceDto;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import static com.holycode.placeManagement.util.DateTimeUtil.getTodayDay;
+import static com.holycode.placeManagement.util.DateTimeUtil.isCurrentTime;
 import static com.holycode.placeManagement.util.RatingUtil.roundOffRating;
 
 @Component
@@ -40,10 +43,11 @@ public class PlaceDtoConverter {
         if (placeDto == null) {
             return new OpeningHoursDto();
         }
-        Map<String, List<String>> hoursGroupedByDay = groupOpeningHoursByDay(placeDto.getOpeningHours().getDays());
+        GroupedShiftsData groupedShiftsData = groupOpeningHoursByDay(placeDto.getOpeningHours().getDays());
 
         return OpeningHoursDto.builder()
-            .openingHours(formatOpeningHours(hoursGroupedByDay))
+            .openingHours(formatOpeningHours(groupedShiftsData.getGroupedHoursByDay()))
+            .openNow(groupedShiftsData.isOpenNow)
             .build();
     }
 
@@ -64,10 +68,12 @@ public class PlaceDtoConverter {
         return openingHoursFormatted;
     }
 
-    private Map<String, List<String>> groupOpeningHoursByDay(Days days) {
+    private GroupedShiftsData groupOpeningHoursByDay(Days days) {
+
         if (days == null) {
-            return Collections.emptyMap();
+            return new GroupedShiftsData();
         }
+        GroupedShiftsData groupedShiftsData = new GroupedShiftsData();
         Map<String, List<String>> daysHoursMap = new LinkedHashMap<>();
         initMapWithDays(daysHoursMap);
 
@@ -101,7 +107,10 @@ public class PlaceDtoConverter {
             daysHoursMap.get("sunday").add(hoursData.getStart() + " - " + hoursData.getEnd());
         });
 
-        return daysHoursMap;
+        groupedShiftsData.setGroupedHoursByDay(daysHoursMap);
+        groupedShiftsData.setOpenNow(isOpenNow(daysHoursMap));
+
+        return groupedShiftsData;
     }
 
     private void initMapWithDays(Map<String, List<String>> daysMap) {
@@ -132,5 +141,37 @@ public class PlaceDtoConverter {
         endDay = endDay.substring(0, 1).toUpperCase() + endDay.substring(1);
 
         return startDay + " - " + endDay;
+    }
+
+    private boolean isOpenNow(Map<String, List<String>> openingHoursGroupedByDay) {
+        List<String> shifts = openingHoursGroupedByDay.get(getTodayDay());
+
+        return shifts.stream().anyMatch(shift -> {
+            String[] startTimeAndEndTime = shift.split(" - ");
+            if (startTimeAndEndTime.length == 2) {
+                String[] startHourAndMinute = startTimeAndEndTime[0].split(":");
+                String startHour = startHourAndMinute[0];
+                String startMinute = startHourAndMinute[1];
+
+                LocalTime startTime = LocalTime.of(Integer.parseInt(startHour), Integer.parseInt(startMinute));
+
+                String[] endHourAndMinute = startTimeAndEndTime[1].split(":");
+                String endHour = endHourAndMinute[0];
+                String endMinute = endHourAndMinute[1];
+
+                LocalTime endTime = LocalTime.of(Integer.parseInt(endHour), Integer.parseInt(endMinute));
+
+                return isCurrentTime(startTime, endTime);
+            }
+            return false;
+        });
+    }
+
+    @Data
+    public static class GroupedShiftsData {
+
+        private Map<String, List<String>> groupedHoursByDay;
+
+        private boolean isOpenNow;
     }
 }

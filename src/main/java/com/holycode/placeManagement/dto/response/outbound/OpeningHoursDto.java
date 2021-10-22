@@ -18,4 +18,6 @@ public class OpeningHoursDto implements Serializable {
     private static final long serialVersionUID = -3636213004165581835L;
 
     private Map<String, List<String>> openingHours;
+
+    private boolean openNow;
 }
